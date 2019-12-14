@@ -5,11 +5,13 @@ This application is designed with your personal financial health in mind.
 To get started run the following commands:
 
 - cd client
+- npm install
 - npm run start
 
 This will get your client application running
 
 - cd ../server
+- npm install
 - npm run start
 
 This will start up your server
