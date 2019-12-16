@@ -33443,31 +33443,412 @@ module.exports.default = axios;
 
 },{"./utils":"../node_modules/axios/lib/utils.js","./helpers/bind":"../node_modules/axios/lib/helpers/bind.js","./core/Axios":"../node_modules/axios/lib/core/Axios.js","./core/mergeConfig":"../node_modules/axios/lib/core/mergeConfig.js","./defaults":"../node_modules/axios/lib/defaults.js","./cancel/Cancel":"../node_modules/axios/lib/cancel/Cancel.js","./cancel/CancelToken":"../node_modules/axios/lib/cancel/CancelToken.js","./cancel/isCancel":"../node_modules/axios/lib/cancel/isCancel.js","./helpers/spread":"../node_modules/axios/lib/helpers/spread.js"}],"../node_modules/axios/index.js":[function(require,module,exports) {
 module.exports = require('./lib/axios');
-},{"./lib/axios":"../node_modules/axios/lib/axios.js"}],"../src/app.js":[function(require,module,exports) {
+},{"./lib/axios":"../node_modules/axios/lib/axios.js"}],"../src/BalanceSheet/Shared/EntryForm/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var EntryForm = function EntryForm(_ref) {
+  var handleSubmit = _ref.handleSubmit,
+      type = _ref.type,
+      _ref$entry = _ref.entry,
+      entry = _ref$entry === void 0 ? {} : _ref$entry;
+
+  var _useState = (0, _react.useState)(entry.name || ''),
+      _useState2 = _slicedToArray(_useState, 2),
+      nameState = _useState2[0],
+      setNameState = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(entry.type || ''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      typeState = _useState4[0],
+      setTypeState = _useState4[1];
+
+  var _useState5 = (0, _react.useState)(entry.balance || ''),
+      _useState6 = _slicedToArray(_useState5, 2),
+      balanceState = _useState6[0],
+      setBalanceState = _useState6[1];
+
+  return _react.default.createElement("form", {
+    onSubmit: function onSubmit() {
+      setBalanceState('');
+      setNameState('');
+      setTypeState('');
+      handleSubmit(event, {
+        type: typeState,
+        name: nameState,
+        balance: parseInt(balanceState)
+      }, entry._id || null);
+    },
+    className: "table-row"
+  }, _react.default.createElement("select", {
+    required: true,
+    onChange: function onChange() {
+      return setTypeState(event.target.value);
+    },
+    value: typeState,
+    name: "type"
+  }, _react.default.createElement("option", null), _react.default.createElement("option", null, "Asset"), _react.default.createElement("option", null, "Liability")), _react.default.createElement("input", {
+    required: true,
+    onChange: function onChange() {
+      return setNameState(event.target.value);
+    },
+    name: "name",
+    value: nameState,
+    placeholder: "name"
+  }), _react.default.createElement("input", {
+    required: true,
+    onChange: function onChange() {
+      return setBalanceState(event.target.value);
+    },
+    type: "number",
+    name: "balance",
+    value: balanceState,
+    placeholder: "balance"
+  }), _react.default.createElement("button", {
+    type: "submit"
+  }, type));
+};
+
+var _default = EntryForm;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"../src/BalanceSheet/RecordTable/Record.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _EntryForm = _interopRequireDefault(require("../Shared/EntryForm"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var Record = function Record(_ref) {
+  var entry = _ref.entry,
+      handleDelete = _ref.handleDelete,
+      handleUpdate = _ref.handleUpdate,
+      toggleEdit = _ref.toggleEdit,
+      editing = _ref.editing;
+  return _react.default.createElement("div", {
+    id: entry._id
+  }, editing === entry._id ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_EntryForm.default, {
+    type: "Update",
+    entry: entry,
+    handleSubmit: handleUpdate
+  }), _react.default.createElement("span", null, _react.default.createElement("button", null, "Canncel"))) : _react.default.createElement("div", {
+    className: "table-row"
+  }, _react.default.createElement("span", null, entry.name), _react.default.createElement("span", null, entry.type), _react.default.createElement("span", null, entry.balance), _react.default.createElement("span", null, _react.default.createElement("button", {
+    onClick: function onClick() {
+      return handleDelete(entry._id);
+    }
+  }, "Delete")), _react.default.createElement("span", null, _react.default.createElement("button", {
+    onClick: function onClick() {
+      return toggleEdit(entry._id);
+    }
+  }, "Edit"))));
+};
+
+var _default = Record;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../Shared/EntryForm":"../src/BalanceSheet/Shared/EntryForm/index.js"}],"../src/BalanceSheet/RecordTable/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _Record = _interopRequireDefault(require("./Record"));
+
+var _EntryForm = _interopRequireDefault(require("../Shared/EntryForm"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var RecordTable = function RecordTable(_ref) {
+  var records = _ref.records,
+      handleDelete = _ref.handleDelete,
+      handleCreate = _ref.handleCreate,
+      handleUpdate = _ref.handleUpdate,
+      toggleEdit = _ref.toggleEdit,
+      editing = _ref.editing,
+      total = _ref.total;
+  return _react.default.createElement("div", {
+    className: "table"
+  }, _react.default.createElement("div", {
+    className: "table-row"
+  }, _react.default.createElement("h3", null, "Name"), _react.default.createElement("h3", null, "Type"), _react.default.createElement("h3", null, "Balance")), records.map(function (entry) {
+    return _react.default.createElement(_Record.default, {
+      entry: entry,
+      handleDelete: handleDelete,
+      handleUpdate: handleUpdate,
+      key: entry._id,
+      toggleEdit: toggleEdit,
+      editing: editing
+    });
+  }), _react.default.createElement("div", {
+    className: "table-row"
+  }, _react.default.createElement("span", null, "Total"), _react.default.createElement("span", null), _react.default.createElement("span", null, total)), _react.default.createElement("h3", null, "Add New Asset or Liablity"), _react.default.createElement(_EntryForm.default, {
+    type: "Add",
+    handleSubmit: handleCreate
+  }));
+};
+
+var _default = RecordTable;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./Record":"../src/BalanceSheet/RecordTable/Record.js","../Shared/EntryForm":"../src/BalanceSheet/Shared/EntryForm/index.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../src/BalanceSheet/index.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../src/BalanceSheet/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _RecordTable = _interopRequireDefault(require("./RecordTable"));
+
+require("./index.css");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var BalanceSheet = function BalanceSheet() {
+  var _useState = (0, _react.useState)([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      recordsState = _useState2[0],
+      setRecordsState = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      editingState = _useState4[0],
+      setEditingState = _useState4[1];
+
+  var _useState5 = (0, _react.useState)(),
+      _useState6 = _slicedToArray(_useState5, 2),
+      totalState = _useState6[0],
+      setTotalState = _useState6[1];
+
+  var api_url = undefined || 'http://localhost:5000';
+  (0, _react.useEffect)(function () {
+    var getRecords = function getRecords() {
+      return _axios.default.get(api_url).then(function (result) {
+        setRecordsState(result.data.records);
+        setTotalState(result.data.total);
+      }).catch(function (error) {
+        return console.error({
+          error: error,
+          message: 'records could not be retrieved'
+        });
+      });
+    };
+
+    getRecords();
+  }, []);
+
+  var handleCreate = function handleCreate(event, entry) {
+    event.preventDefault();
+    console.log(entry);
+
+    _axios.default.post(api_url, entry).then(function (entry) {
+      return setRecordsState(recordsState.concat(entry.data.result));
+    }).catch(function (error) {
+      return console.error({
+        error: error,
+        message: 'record could not be created'
+      });
+    });
+  };
+
+  var handleUpdate = function handleUpdate(event, entry, id) {
+    event.preventDefault();
+
+    _axios.default.put("".concat(api_url, "/").concat(id), entry).then(function (res) {
+      var copyRecords = _toConsumableArray(recordsState);
+
+      var recordToUpdate = copyRecords.findIndex(function (entry) {
+        return entry._id === id;
+      });
+      copyRecords[recordToUpdate] = res.data.result;
+      console.log(copyRecords);
+      setRecordsState(copyRecords);
+    }).catch(function (error) {
+      return console.error({
+        error: error,
+        message: 'record could not be updated'
+      });
+    });
+
+    setEditingState(false);
+  };
+
+  var handleDelete = function handleDelete(id) {
+    _axios.default.delete("".concat(api_url, "/").concat(id)).then(function () {
+      return setRecordsState(recordsState.filter(function (entry) {
+        return entry._id !== id;
+      }));
+    }).catch(function (error) {
+      return console.error({
+        error: error,
+        message: 'record could not be deleted'
+      });
+    });
+  };
+
+  return _react.default.createElement("div", null, _react.default.createElement(_RecordTable.default, {
+    records: recordsState,
+    handleDelete: handleDelete,
+    handleCreate: handleCreate,
+    handleUpdate: handleUpdate,
+    toggleEdit: function toggleEdit(id) {
+      return setEditingState(id);
+    },
+    editing: editingState,
+    total: totalState
+  }));
+};
+
+var _default = BalanceSheet;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","./RecordTable":"../src/BalanceSheet/RecordTable/index.js","./index.css":"../src/BalanceSheet/index.css"}],"../src/app.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
-var _axios = _interopRequireDefault(require("axios"));
+var _BalanceSheet = _interopRequireDefault(require("./BalanceSheet"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
-  var handleSubmit = function handleSubmit() {
-    return _axios.default.get('http://localhost:5000/');
-  };
-
-  return _react.default.createElement("div", null, _react.default.createElement("button", {
-    onClick: function onClick() {
-      return handleSubmit();
-    }
-  }));
+  return _react.default.createElement("div", null, _react.default.createElement(_BalanceSheet.default, null));
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById('root'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","axios":"../node_modules/axios/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./BalanceSheet":"../src/BalanceSheet/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -33495,7 +33876,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56361" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58167" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

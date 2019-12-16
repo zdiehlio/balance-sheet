@@ -1,0 +1,13 @@
+.table-row {
+  display: grid;
+  grid-template-columns: 100px 100px 100px 100px 100px;
+  padding-bottom: 10px;
+}
+
+.table-data {
+  border: 1px black solid;
+}
+
+.table h3 {
+  display: inline-block;
+}
