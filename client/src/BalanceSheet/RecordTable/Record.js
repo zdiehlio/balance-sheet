@@ -6,16 +6,24 @@ const Record = ({ entry, handleDelete, handleUpdate, toggleEdit, editing }) => {
     <div id={entry._id}>
       {editing === entry._id ? (
         <>
-          <EntryForm type='Update' entry={entry} handleSubmit={handleUpdate} />
-          <span>
-            <button>Canncel</button>
-          </span>
+          <EntryForm
+            type='Update'
+            entry={entry}
+            handleCancel={toggleEdit}
+            handleSubmit={handleUpdate}
+          />
         </>
       ) : (
         <div className='table-row'>
-          <span>{entry.name}</span>
-          <span>{entry.type}</span>
-          <span>{entry.balance}</span>
+          <span className={entry.type === 'Liability' ? 'red' : 'green'}>
+            {entry.name}
+          </span>
+          <span className={entry.type === 'Liability' ? 'red' : 'green'}>
+            {entry.type}
+          </span>
+          <span className={entry.type === 'Liability' ? 'red' : 'green'}>
+            {entry.balance}
+          </span>
           <span>
             <button onClick={() => handleDelete(entry._id)}>Delete</button>
           </span>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const EntryForm = ({ handleSubmit, type, entry = {} }) => {
+const EntryForm = ({ handleSubmit, type, handleCancel, entry = {} }) => {
   const [nameState, setNameState] = useState(entry.name || '')
   const [typeState, setTypeState] = useState(entry.type || '')
   const [balanceState, setBalanceState] = useState(entry.balance || '')
@@ -28,6 +28,7 @@ const EntryForm = ({ handleSubmit, type, entry = {} }) => {
         onChange={() => setTypeState(event.target.value)}
         value={typeState}
         name='type'
+        className='form-input'
       >
         <option></option>
         <option>Asset</option>
@@ -39,6 +40,7 @@ const EntryForm = ({ handleSubmit, type, entry = {} }) => {
         name='name'
         value={nameState}
         placeholder='name'
+        className='form-input'
       />
       <input
         required
@@ -47,8 +49,10 @@ const EntryForm = ({ handleSubmit, type, entry = {} }) => {
         name='balance'
         value={balanceState}
         placeholder='balance'
+        className='form-input'
       />
       <button type='submit'>{type}</button>
+      {type === 'Update' && <button onClick={handleCancel}>Cancel</button>}
     </form>
   )
 }

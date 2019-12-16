@@ -31,11 +31,17 @@ const RecordTable = ({
           />
         )
       })}
-      <div className='table-row'>
-        <span>Total</span>
-        <span></span>
-        <span>{total}</span>
-      </div>
+      {records.length > 0 ? (
+        <div className='table-row'>
+          <span className={total < 0 ? 'red' : 'green'}>
+            <strong>Total</strong>
+          </span>
+          <span></span>
+          <span className={total < 0 ? 'red' : 'green'}>{total}</span>
+        </div>
+      ) : (
+        <div>No Entries</div>
+      )}
       <h3>Add New Asset or Liablity</h3>
       <EntryForm type='Add' handleSubmit={handleCreate} />
     </div>

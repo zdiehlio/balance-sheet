@@ -16,9 +16,9 @@ const BalanceSheet = () => {
     const getRecords = () => {
       return axios
         .get(api_url)
-        .then(result => {
-          setRecordsState(result.data.records)
-          setTotalState(result.data.total)
+        .then(res => {
+          setRecordsState(res.data.result)
+          setTotalState(res.data.balanceDiff)
         })
         .catch(error =>
           console.error({ error, message: 'records could not be retrieved' })
@@ -32,7 +32,10 @@ const BalanceSheet = () => {
     console.log(entry)
     axios
       .post(api_url, entry)
-      .then(entry => setRecordsState(recordsState.concat(entry.data.result)))
+      .then(res => {
+        setRecordsState(recordsState.concat(res.data.result))
+        setTotalState(totalState + res.data.balanceDiff)
+      })
       .catch(error =>
         console.error({ error, message: 'record could not be created' })
       )
@@ -46,8 +49,8 @@ const BalanceSheet = () => {
         const copyRecords = [...recordsState]
         const recordToUpdate = copyRecords.findIndex(entry => entry._id === id)
         copyRecords[recordToUpdate] = res.data.result
-        console.log(copyRecords)
         setRecordsState(copyRecords)
+        setTotalState(totalState + res.data.balanceDiff)
       })
       .catch(error =>
         console.error({ error, message: 'record could not be updated' })
@@ -58,9 +61,10 @@ const BalanceSheet = () => {
   const handleDelete = id => {
     axios
       .delete(`${api_url}/${id}`)
-      .then(() =>
+      .then(res => {
         setRecordsState(recordsState.filter(entry => entry._id !== id))
-      )
+        setTotalState(totalState - res.data.balanceDiff)
+      })
       .catch(error =>
         console.error({ error, message: 'record could not be deleted' })
       )
