@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "everything": "nodemon ./server/server.js && parcel ./client/public/index.html",
     "start:client": "parcel ./client/public/index.html",
-    "start:server": "nodemon ./server/server.js"
+    "start:server": "node ./server/server.js"
   },
   "repository": {
     "type": "git",
